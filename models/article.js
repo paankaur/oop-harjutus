@@ -4,8 +4,8 @@ class ArticleModel extends BaseSQLModel {
   constructor() {
     super('article');
   }
-  async findAll() {
-    const articles = await super.findAll();
+  async findOne(slug) {
+    const articles = await super.findOne('slug', slug);
     return articles;
   }
 }

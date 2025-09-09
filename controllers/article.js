@@ -11,5 +11,14 @@ class articleController {
             res.status(500).json({ error: 'Failed to fetch articles' });
         }
 } 
+
+    async getArticleBySlug(req, res) {
+        const article = await articleModel.findOne(req.params.slug);
+        if (article) {
+            res.status(201).json({ article: article });
+        } else {
+            res.status(404).json({ error: 'Article not found' });
+        }
+    }
 }
 module.exports = articleController;
