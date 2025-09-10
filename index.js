@@ -8,7 +8,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 const articleRoutes = require('./routes/articles');
-
+const authorsRoutes = require('./routes/authors');
+app.use('/', authorsRoutes);
 app.use('/', articleRoutes);
 
 app.listen(PORT, () => {
