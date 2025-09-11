@@ -6,6 +6,7 @@ const PORT = 3025;
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
 const articleRoutes = require('./routes/articles');
 const authorsRoutes = require('./routes/authors');

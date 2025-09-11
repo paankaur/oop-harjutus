@@ -1,13 +1,17 @@
-const BaseSQLModel = require('./base');
+const BaseSQLModel = require("./base");
 
 class ArticleModel extends BaseSQLModel {
   constructor() {
-    super('article');
+    super("article");
   }
   async findOne(slug) {
-    const articles = await super.findOne('slug', slug);
+    const articles = await super.findOne("slug", slug);
     return articles;
+  }
+  async create(article){
+    const createdArticle = await super.create(article);
+    return createdArticle;
   }
 }
 
-module.exports = ArticleModel; 
+module.exports = ArticleModel;
