@@ -34,5 +34,29 @@ class articleController {
       article: { id: articleId, ...newArticle },
     });
   }
+
+  async updateArticle(req, res) {
+  try {
+    const articleId = req.params.id;
+
+    // Build updated data object from request body
+    const updatedArticle = req.body;
+
+    const affectedRows = await articleModel.update(articleId, updatedArticle);
+
+    if (affectedRows > 0) {
+      res.status(200).json({
+        message: `Article with ID ${articleId} updated successfully`,
+        article: { id: articleId, ...updatedArticle }
+      });
+    } else {
+      res.status(404).json({ error: "Article not found or not updated" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to update article" });
+  }
+}
+
 }
 module.exports = articleController;
