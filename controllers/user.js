@@ -64,6 +64,46 @@ class UserController {
       res.status(500).json({ error: "Server error during registration" });
     }
   }
+
+  //login
+
+  async login(req, res) {
+    try {
+      const { username, password } = req.body;
+
+      // Required fields check
+      if (!username || !password) {
+        return res.status(400).json({ error: "Username and password are required" });
+      }
+
+      // Find user by username
+      const userData = await userModel.findOne("username", username);
+      if (!userData) {
+        return res.status(400).json({ error: "Invalid username or password" });
+      }
+
+      // Compare passwords
+      const isPasswordValid = await bcrypt.compare(password, userData.password);
+      if (!isPasswordValid) {
+        return res.status(400).json({ error: "Invalid username or password" });
+      }
+
+      // Store user session
+      req.session.user = {
+        username: userData.username,
+        user_id: userData.id,
+      };
+
+      res.status(200).json({
+        message: "Login successful",
+        user_session: req.session.user, // Return session info
+      });
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Server error during login" });
+    }
+  }
 }
 
 module.exports = UserController;
