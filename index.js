@@ -1,5 +1,7 @@
 const express = require('express');
 const sessions = require('express-session');
+const hbs = require('express-handlebars');
+
 
 const app = express();
 const PORT = 3025;
@@ -12,6 +14,14 @@ app.use(sessions({
     saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 * 24 }, // 1 day
     resave: false
+}));
+
+app.set('   view engine', 'hbs');
+app.set('view engine', 'hbs');
+app.engine('hbs', hbs.engine({
+    extname: 'hbs',
+    defaultLayout: 'main',
+    layoutsDir: __dirname + '/views/layouts/'
 }));
 
 const articleRoutes = require('./routes/articles');
