@@ -24,6 +24,10 @@ app.engine('hbs', hbs.engine({
     layoutsDir: __dirname + '/views/layouts/'
 }));
 
+app.use(express.static('public'));
+
+// Routes
+
 const articleRoutes = require('./routes/articles');
 const authorsRoutes = require('./routes/authors');
 
