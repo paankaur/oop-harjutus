@@ -24,9 +24,9 @@ class articleController {
   async getArticleBySlug(req, res) {
     const article = await articleModel.findOne(req.params.slug);
     if (article) {
-      res.status(201).json({ article: article });
+      res.render("article", { article });
     } else {
-      res.status(404).json({ error: "Article not found" });
+      res.status(404).render("404", { message: "Article not found" });
     }
   }
 
