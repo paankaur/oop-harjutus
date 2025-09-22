@@ -10,6 +10,16 @@ class articleController {
       res.status(500).json({ error: "Failed to fetch articles" });
     }
   }
+    // For browser (renders index.hbs with articles)
+  async getHomePage(req, res) {
+    try {
+      const articles = await articleModel.findAll();
+      res.render("index", { articles });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Failed to load homepage");
+    }
+  }
 
   async getArticleBySlug(req, res) {
     const article = await articleModel.findOne(req.params.slug);
@@ -19,6 +29,21 @@ class articleController {
       res.status(404).json({ error: "Article not found" });
     }
   }
+
+/*     async getArticleBySlug(req, res) {
+    try {
+      const article = await articleModel.findOne("slug", req.params.slug);
+      if (article) {
+        res.status(200).json({ article: article });
+      } else {
+        res.status(404).json({ error: "Article not found" });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Failed to fetch article" });
+    }
+  } */
+  
   async createArticle(req, res) {
     const newArticle = {
       name: req.body.name,
